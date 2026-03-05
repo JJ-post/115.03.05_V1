@@ -135,6 +135,23 @@ st.markdown("""
     hr {
         border-color: #334155 !important;
     }
+/* 🎯 標題與自訂 Logo 設計 */
+    .title-container {
+        display: flex; align-items: center; gap: 15px;
+        margin-bottom: 15px; margin-top: 15px;
+    }
+    .app-logo {
+        background-color: transparent !important; 
+        width: 55px; height: 55px;
+        display: flex; align-items: center; justify-content: center;
+    }
+    .app-logo img {
+        max-width: 100%; max-height: 100%; object-fit: contain;
+    }
+    .main-title-text {
+        font-size: clamp(26px, 7vw, 40px);
+        font-weight: bold; color: #FAFAFA; margin: 0;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -154,7 +171,14 @@ def load_data():
 df = load_data()
 
 # --- 網頁標題與註解區 ---
-st.title("📮 甲佣試算一覽表")
+st.markdown("""
+<div class="title-container">
+    <div class="app-logo">
+        <img src="https://raw.githubusercontent.com/JJ-post/115.03.05_V1/refs/heads/main/ChatGPT%20Image%202026%E5%B9%B43%E6%9C%884%E6%97%A5%20%E4%B8%8B%E5%8D%8804_46_46.png">
+    </div>
+    <div class="main-title-text">甲佣試算一覽表</div>
+</div>
+""", unsafe_allow_html=True)
 
 st.markdown("""
 <div style='font-size: 14px; color: #94A3B8; line-height: 1.5; margin-bottom: 15px;'>
@@ -236,3 +260,4 @@ for group in groups:
         rows_html += f"<div style='display: flex; justify-content: space-between; padding-top: 12px; margin-top: 8px; border-top: 1px dashed #475569; font-size: 16px; font-weight: bold;'><span style='color: #FAFAFA;'>合計</span><span style='color: #FF4B4B;'>{sum_yearly_amt:,} 元</span></div></div>"
         
         st.markdown(rows_html, unsafe_allow_html=True)
+
