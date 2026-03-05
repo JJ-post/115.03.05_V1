@@ -142,7 +142,7 @@ st.markdown("""
     }
     .app-logo {
         background-color: transparent !important; 
-        width: 55px; height: 55px;
+        width: 100px; height: 100px;
         display: flex; align-items: center; justify-content: center;
     }
     .app-logo img {
@@ -260,4 +260,5 @@ for group in groups:
         rows_html += f"<div style='display: flex; justify-content: space-between; padding-top: 12px; margin-top: 8px; border-top: 1px dashed #475569; font-size: 16px; font-weight: bold;'><span style='color: #FAFAFA;'>合計</span><span style='color: #FF4B4B;'>{sum_yearly_amt:,} 元</span></div></div>"
         
         st.markdown(rows_html, unsafe_allow_html=True)
+
 
