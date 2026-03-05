@@ -11,7 +11,14 @@ st.markdown("""
         color: #FAFAFA; 
     }
     
-    /* 🚫 【終極修改 1】徹底鎖死「群組摺疊面板 (Expander)」的標題，取消任何反白效果 */
+    /* 強制網頁大標題不換行，並根據螢幕自動縮放大小 */
+    h1 {
+        white-space: nowrap !important; 
+        font-size: clamp(22px, 7vw, 40px) !important; 
+    }
+    
+    /* 群組摺疊面板 (Expander) 標題列 */
+    .streamlit-expanderHeader,
     [data-testid="stExpander"] details summary,
     [data-testid="stExpander"] details summary:hover,
     [data-testid="stExpander"] details summary:focus,
@@ -30,58 +37,98 @@ st.markdown("""
         border-radius: 0 0 8px 8px;
     }
 
-    /* 🚫 【終極修改 2】徹底鎖死「輸入保費」框框，取消任何白底反白 */
-    /* 輸入框的標題文字 */
+    /* 選擇商品後，框內的文字顏色強制變白 */
+    [data-testid="stSelectbox"] div[data-baseweb="select"] div {
+        color: #FAFAFA !important;
+    }
+    [data-testid="stSelectbox"] div[data-baseweb="select"] span {
+        color: #FAFAFA !important;
+    }
+
+    /* 徹底鎖死「輸入保費」框框，取消任何白底反白 */
     .stNumberInput label p {
         color: #94A3B8 !important; 
         font-size: 14px !important;
     }
-    /* 輸入框的外層容器 (包含 hover 和點擊時的 focus 狀態) */
+    
+    /* 輸入框外層容器強制深色底 */
     [data-testid="stNumberInput"] div[data-baseweb="input"],
     [data-testid="stNumberInput"] div[data-baseweb="input"]:hover,
     [data-testid="stNumberInput"] div[data-baseweb="input"]:focus-within {
         background-color: #1E293B !important;
         border: 1px solid #475569 !important;
     }
-    /* 輸入框裡面打字的區域 */
-    [data-testid="stNumberInput"] input,
-    [data-testid="stNumberInput"] input:focus {
+    
+    /* 輸入框裡面打字區域強制深色底、白色字 */
+    [data-testid="stNumberInput"] input {
         background-color: #1E293B !important;
         color: #FAFAFA !important;
-        -webkit-text-fill-color: #FAFAFA !important; /* 強制文字為白色 */
+        -webkit-text-fill-color: #FAFAFA !important; 
+        caret-color: #FAFAFA !important; /* 強制輸入游標也變成白色 */
     }
-    /* 輸入框旁邊的加減按鈕 */
+    
+    /* placeholder(預設空白時的提示字) 顏色調淡一點 */
+    [data-testid="stNumberInput"] input::placeholder {
+        color: #475569 !important;
+        -webkit-text-fill-color: #475569 !important;
+    }
+    
+    /* 徹底隱藏輸入框旁邊的加減按鈕 (+/-) */
     [data-testid="stNumberInput"] button {
-        background-color: #1E293B !important;
-        color: #FAFAFA !important;
-    }
-    [data-testid="stNumberInput"] button:hover {
-        background-color: #334155 !important; /* 滑鼠移過按鈕時稍微深灰一點點 */
+        display: none !important;
     }
 
-    /* 順便保留之前針對 Selectbox (選擇商品) 的防反白設定，以防萬一 */
-    [data-testid="stSelectbox"] div[data-baseweb="select"] > div,
-    [data-testid="stSelectbox"] div[data-baseweb="select"] > div:hover,
-    [data-testid="stSelectbox"] div[data-baseweb="select"] > div:focus,
-    [data-testid="stSelectbox"] div[data-baseweb="select"] > div:active {
+    /* 🎯 【修復紅框問題】消除打字時出現的「清除按鈕(x)」白底區塊 */
+    [data-testid="stNumberInput"] div[data-baseweb="input"] > div {
+        background-color: transparent !important;
+    }
+    [data-testid="stNumberInput"] div[data-baseweb="input"] [role="button"] {
+        background-color: transparent !important;
+    }
+    [data-testid="stNumberInput"] div[data-baseweb="input"] [role="button"]:hover {
+        background-color: #334155 !important; /* 讓滑鼠移到叉叉上時稍微變深灰 */
+        border-radius: 4px;
+    }
+    /* 讓叉叉 (x) 圖示變成淺灰色 */
+    [data-testid="stNumberInput"] div[data-baseweb="input"] svg {
+        fill: #94A3B8 !important;
+        color: #94A3B8 !important;
+    }
+
+    /* 選擇商品框 (Selectbox) 外觀：強制深色 */
+    div[data-baseweb="select"] > div,
+    div[data-baseweb="select"] > div:hover,
+    div[data-baseweb="select"] > div:focus-within {
         background-color: #1E293B !important;
-        color: #FAFAFA !important;
         border: 1px solid #475569 !important;
     }
-    [data-testid="stSelectbox"] div[data-baseweb="select"] span {
+
+    /* 讓下拉選單右側的「箭頭圖示 (v)」變成白色顯示出來 */
+    div[data-baseweb="select"] svg {
+        fill: #FAFAFA !important;
         color: #FAFAFA !important;
     }
-    [data-testid="stSelectbox"] ul {
+
+    /* 下拉選單 "展開後的整串清單"：強制深色 */
+    ul[role="listbox"], 
+    div[data-baseweb="popover"] ul {
         background-color: #1E293B !important;
     }
-    [data-testid="stSelectbox"] li {
+    
+    /* 清單內的每一列選項 */
+    li[role="option"],
+    div[data-baseweb="popover"] li {
+        background-color: #1E293B !important;
         color: #FAFAFA !important;
-        background-color: #1E293B !important;
     }
-    [data-testid="stSelectbox"] li:hover, 
-    [data-testid="stSelectbox"] li[aria-selected="true"] {
+    
+    /* 滑鼠停留在選項上時 */
+    li[role="option"]:hover,
+    li[role="option"][aria-selected="true"],
+    div[data-baseweb="popover"] li:hover,
+    div[data-baseweb="popover"] li[aria-selected="true"] {
         background-color: #334155 !important; 
-        color: #FAFAFA !important; 
+        color: #FAFAFA !important;
     }
 
     /* 微調分隔線顏色 */
@@ -111,8 +158,8 @@ st.title("📮 甲佣試算一覽表")
 
 st.markdown("""
 <div style='font-size: 14px; color: #94A3B8; line-height: 1.5; margin-bottom: 15px;'>
-製作者：徐杰　v115.02.08-2（修正版）<br>
-甲佣比率請以最新公告之公文為主<br>
+製作者：徐杰　v115.03.05_V1（修正版）<br>
+甲佣比率請以最新公告之公文為主(壽字第1152200308號函)<br>
 （本網頁僅供參考） 
 </div>
 <div style='display: flex; align-items: center; font-size: 15px; color: #94A3B8; margin-bottom: 20px; font-weight: bold;'>
@@ -162,10 +209,18 @@ for group in groups:
         st.markdown(header_html, unsafe_allow_html=True)
         
         # --- 輸入保費框 ---
-        premium = st.number_input("輸入保費 (月繳)", min_value=0, value=0, step=1000, key=f"prem_{group}")
+        premium = st.number_input(
+            "輸入保費 (月繳)", 
+            min_value=0, 
+            value=None, 
+            step=1000, 
+            key=f"prem_{group}",
+            placeholder="請輸入金額"
+        )
         
         # 🏆 【核心公式修正區】
-        exact_total = (premium / factor) * (commission_rate / 100)
+        calc_premium = premium if premium is not None else 0
+        exact_total = (calc_premium / factor) * (commission_rate / 100)
         
         # --- 顯示下半部：分年期計算明細卡片 ---
         rows_html = "<div style='margin-top: 15px; background-color: #1E293B; border: 1px solid #334155; border-radius: 8px; padding: 15px;'>"
